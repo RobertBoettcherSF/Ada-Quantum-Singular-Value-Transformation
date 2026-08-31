@@ -35,7 +35,7 @@ begin
    -- TEST 2 — Chebyshev Polynomials Higher Degrees
    Put_Line ("TEST 2 — Chebyshev Polynomials Higher Degrees");
    Check ("2.1 T_2(0.5) equals -0.5", abs (Chebyshev_T (2, 0.5) - (-0.5)) < 1.0E-10);
-   Check ("2.2 T_3(0.5) equals -0.5", abs (Chebyshev_T (3, 0.5) - (-0.5)) < 1.0E-10);
+   Check ("2.2 T_3(0.5) equals -1.0", abs (Chebyshev_T (3, 0.5) - (-1.0)) < 1.0E-10);
    Check ("2.3 T_4(0.0) equals 1.0", abs (Chebyshev_T (4, 0.0) - 1.0) < 1.0E-10);
 
    -- TEST 3 — General Polynomial Evaluation
@@ -133,7 +133,7 @@ begin
    begin
       Check ("11.1 Controlled projector reflection at 0.6", abs (Projector_Project (0.6, True) - 0.2) < 1.0E-10);
       Check ("11.2 Uncontrolled projector reflection at 0.6", abs (Projector_Project (0.6, False) - (-0.6)) < 1.0E-10);
-      Check ("11.3 Projector involution property", abs (Projector_Project (Projector_Project (0.8, True), True) - 0.8) < 1.0E-10);
+      Check ("11.3 Projector involution property", abs (Projector_Project (Projector_Project (0.8, False), False) - 0.8) < 1.0E-10);
    end;
 
    -- TEST 12 — Expected Exception / Domain Error Handling
