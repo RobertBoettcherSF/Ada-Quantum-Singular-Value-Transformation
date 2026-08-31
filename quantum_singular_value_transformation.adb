@@ -16,6 +16,9 @@ package body Quantum_Singular_Value_Transformation is
    -----------------------------------------------------------------
    function Chebyshev_T (N : Natural; X : Real) return Real is
    begin
+      if X < -1.0 or X > 1.0 then
+         raise Domain_Error;
+      end if;
       if N = 0 then
          return 1.0;
       elsif N = 1 then
@@ -71,15 +74,11 @@ package body Quantum_Singular_Value_Transformation is
       Coeffs : Coefficient_Array; 
       Parity : Polynomial_Parity) return Real 
    is
-      Base_Val : Real := Evaluate_Polynomial (Coeffs, X);
+      Base_Val : constant Real := Evaluate_Polynomial (Coeffs, X);
    begin
       -- Enforce parity characteristics in QSVT polynomial transformation
       case Parity is
          when Odd =>
-            -- Odd polynomial must satisfy P(-x) = -P(x)
-            if X < 0.0 then
-               null;
-            end if;
             return Base_Val;
          when Even =>
             -- Even polynomial satisfies P(-x) = P(x)
