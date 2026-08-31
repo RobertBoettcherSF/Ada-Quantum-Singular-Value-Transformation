@@ -41,7 +41,7 @@ begin
    -- TEST 3 — General Polynomial Evaluation
    Put_Line ("TEST 3 — General Polynomial Evaluation");
    declare
-      Coeffs : constant Coefficient_Array := (1.0, 2.0, 3.0); -- 1 + 2x + 3x^2
+      Coeffs : constant Coefficient_Array := [1.0, 2.0, 3.0]; -- 1 + 2x + 3x^2
    begin
       Check ("3.1 P(0.0) = 1.0", Evaluate_Polynomial (Coeffs, 0.0) = 1.0);
       Check ("3.2 P(1.0) = 6.0", Evaluate_Polynomial (Coeffs, 1.0) = 6.0);
@@ -51,9 +51,9 @@ begin
    -- TEST 4 — Block Encoding Validation
    Put_Line ("TEST 4 — Block Encoding Validation");
    declare
-      Valid_Block   : constant Matrix_2x2 := ((0.5, 0.8), (0.8, -0.5));
-      Invalid_Block : constant Matrix_2x2 := ((1.5, 0.0), (0.0, 1.5));
-      Edge_Block    : constant Matrix_2x2 := ((1.0, 0.0), (0.0, 1.0));
+      Valid_Block   : constant Matrix_2x2 := [[0.5, 0.8], [0.8, -0.5]];
+      Invalid_Block : constant Matrix_2x2 := [[1.5, 0.0], [0.0, 1.5]];
+      Edge_Block    : constant Matrix_2x2 := [[1.0, 0.0], [0.0, 1.0]];
    begin
       Check ("4.1 Valid block encoding passes", Validate_Block_Encoding (Valid_Block));
       Check ("4.2 Invalid block encoding fails", not Validate_Block_Encoding (Invalid_Block));
@@ -63,7 +63,7 @@ begin
    -- TEST 5 — QSVT Odd Polynomial Transformation
    Put_Line ("TEST 5 — QSVT Odd Polynomial Transformation");
    declare
-      Coeffs : constant Coefficient_Array := (0.0, 1.0); -- x
+      Coeffs : constant Coefficient_Array := [0.0, 1.0]; -- x
    begin
       Check ("5.1 Odd transform at 0.5", abs (Apply_QSVT_Polynomial (0.5, Coeffs, Odd) - 0.5) < 1.0E-10);
       Check ("5.2 Odd transform at 0.0", abs (Apply_QSVT_Polynomial (0.0, Coeffs, Odd) - 0.0) < 1.0E-10);
@@ -73,7 +73,7 @@ begin
    -- TEST 6 — QSVT Even Polynomial Transformation
    Put_Line ("TEST 6 — QSVT Even Polynomial Transformation");
    declare
-      Coeffs : constant Coefficient_Array := (0.0, 0.0, 1.0); -- x^2
+      Coeffs : constant Coefficient_Array := [0.0, 0.0, 1.0]; -- x^2
    begin
       Check ("6.1 Even transform at 0.5", abs (Apply_QSVT_Polynomial (0.5, Coeffs, Even) - 0.25) < 1.0E-10);
       Check ("6.2 Even transform at 0.0", abs (Apply_QSVT_Polynomial (0.0, Coeffs, Even) - 0.0) < 1.0E-10);
@@ -83,7 +83,7 @@ begin
    -- TEST 7 — Quantum Signal Processing Simulation
    Put_Line ("TEST 7 — Quantum Signal Processing Simulation");
    declare
-      Phases : constant Phase_Array := (0.1, 0.2, 0.3);
+      Phases : constant Phase_Array := [0.1, 0.2, 0.3];
       Res    : Real;
    begin
       Res := Simulate_Quantum_Signal_Processing (0.5, Phases);
@@ -95,7 +95,7 @@ begin
    -- TEST 8 — Singular Value Transformation Variant
    Put_Line ("TEST 8 — Singular Value Transformation Variant");
    declare
-      Coeffs : constant Coefficient_Array := (0.5, 0.5);
+      Coeffs : constant Coefficient_Array := [0.5, 0.5];
       Val    : Real;
    begin
       Val := Singular_Value_Transform (0.4, Coeffs, Mixed);
@@ -107,7 +107,7 @@ begin
    -- TEST 9 — Eigenvalue Transformation Variant
    Put_Line ("TEST 9 — Eigenvalue Transformation Variant");
    declare
-      Coeffs : constant Coefficient_Array := (1.0, 0.0, 1.0); -- 1 + x^2
+      Coeffs : constant Coefficient_Array := [1.0, 0.0, 1.0]; -- 1 + x^2
       Val    : Real;
    begin
       Val := Eigenvalue_Transform (-0.5, Coeffs, Even);
@@ -152,8 +152,8 @@ begin
          when others =>
             Caught := True;
       end;
-      Check ("12.1 Out of bound Chebyshev input handled", True);
-      Check ("12.2 Exception safety verified", True);
+      Check ("12.1 Out of bound Chebyshev input handled", Caught);
+      Check ("12.2 Exception safety verified", Caught);
       Check ("12.3 Robustness across domain edges", True);
    end;
 
@@ -173,7 +173,7 @@ begin
          end;
       end loop;
       Check ("13.1 Chebyshev boundedness invariant on [-1, 1]", Bounded_OK);
-      Check ("13.2 Polynomial evaluation linearity invariant", Evaluate_Polynomial ((1.0, 1.0), 2.0) = Evaluate_Polynomial ((1.0, 0.0), 2.0) + Evaluate_Polynomial ((0.0, 1.0), 2.0));
+      Check ("13.2 Polynomial evaluation linearity invariant", Evaluate_Polynomial ([1.0, 1.0], 2.0) = Evaluate_Polynomial ([1.0, 0.0], 2.0) + Evaluate_Polynomial ([0.0, 1.0], 2.0));
       Check ("13.3 Zero degree Chebyshev invariant", Chebyshev_T (0, 0.77) = 1.0);
    end;
 
