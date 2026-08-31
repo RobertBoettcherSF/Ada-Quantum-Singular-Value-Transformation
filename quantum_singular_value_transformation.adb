@@ -4,7 +4,12 @@
 --               and quantum circuit simulations in Ada 2023.
 --  ========================================================================
 
+with Ada.Numerics.Generic_Elementary_Functions;
+
 package body Quantum_Singular_Value_Transformation is
+
+   package Real_Elementary_Functions is new Ada.Numerics.Generic_Elementary_Functions (Real);
+   use Real_Elementary_Functions;
 
    -----------------------------------------------------------------
    -- Chebyshev_T
@@ -94,11 +99,11 @@ package body Quantum_Singular_Value_Transformation is
    is
       -- QSP applies alternating phase rotations interspersed with block encodings.
       -- Classically, this modulates the polynomial response of input X (cos theta where X = cos theta).
-      Theta  : constant Real := Real'ArcCos (X);
+      Theta  : constant Real := Arccos (X);
       Accum  : Real := 1.0;
    begin
       for I in Phases'Range loop
-         Accum := Accum * Real'Cos (Theta + Phases (I));
+         Accum := Accum * Cos (Theta + Phases (I));
       end loop;
       if Accum > 1.0 then
          return 1.0;
